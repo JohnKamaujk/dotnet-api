@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleAPI.Data;
+using SimpleAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ProductContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     new MySqlServerVersion(new Version(8, 0, 39)))); // Use your MySQL version
+
+// Register the ProductRepository
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
