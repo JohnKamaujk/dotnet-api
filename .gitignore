@@ -1,0 +1,33 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+.vs/
+*.user
+*.suo
+
+# IDE-specific folders
+.vscode/
+
+# Configuration files
+*.csproj.user
+*.csproj.nuget.g.props
+*.csproj.nuget.g.targets
+*.appsettings.*
+
+# Dependencies
+packages/
+*.nupkg
+*.snupkg
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+Thumbs.db
