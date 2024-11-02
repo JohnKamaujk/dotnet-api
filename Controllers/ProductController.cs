@@ -7,11 +7,11 @@ namespace SimpleAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
@@ -53,16 +53,24 @@ namespace SimpleAPI.Controllers
                 return BadRequest(ModelState); // Return validation errors
             }
 
-            if (id != product.Id)
-                return BadRequest();
+            // No need to check if id != product.Id since we're using the route parameter
 
             var existingProduct = await _productRepository.GetByIdAsync(id);
             if (existingProduct == null)
+            {
                 return NotFound();
+            }
 
-            await _productRepository.UpdateAsync(product);
+            // Update the properties from the body
+            existingProduct.Name = product.Name;
+            existingProduct.Description = product.Description;
+            existingProduct.Price = product.Price;
+
+            await _productRepository.UpdateAsync(existingProduct); // Pass the existing product
+
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
